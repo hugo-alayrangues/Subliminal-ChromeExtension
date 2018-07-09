@@ -1,0 +1,16 @@
+{
+  "name": "Attentive Display",
+  "description": "Base Level Extension",
+  "version": "1.0",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": ["storage", "tabs"],
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "css": ["style.css"],
+    "js": ["jquery-3.3.1.min.js", "contentscript.js"],
+    "run_at": "document_end"
+  }]
+}

@@ -1,0 +1,46 @@
+<html>
+ <head>
+  <title>xLabs: Gaze Tracking Calibration Demo</title>
+ </head>
+ <body>
+     <script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-53017531-1', 'auto');
+    ga('send', 'pageview');
+
+     </script>
+  <h1>xLabs: Gaze Tracking Calibration Demo</h1>
+  <p>This page uses gaze tracking to browse a palette of colours. You'll see them after you calibrate.</p>
+  <p>In this demo, you calibrate the gaze-tracking system by PRESSING and HOLDING the mouse on some donuts while moving your head to "eat" them.</p>
+  <p>After eating 5 donuts, you will see the colour palette and use gaze-tracking to explore it.</p>
+  <button id="start" style="color: #FFF; background-color: #900; border: 1px solid #900; font-weight: bold;font-size: 150%; text-transform: uppercase; margin: 20px; ">Start</button>
+  <div id="graph">
+  </div>
+  
+  <script type="text/javascript" src="../colours/js/libs/d3.v3.min.js"> </script>
+  <script type="text/javascript" src="../colours/js/libs/queue.v1.min.js"> </script>
+  <script>window.jQuery || document.write('<script src="../colours/js/libs/jquery-1.6.2.min.js"><\/script>')</script>
+
+  <script src="../api/xlabs.js"></script>
+  <script type="text/javascript" src="../useful/util.js"></script>
+  <script type="text/javascript" src="../useful/state.js"></script>
+  <script type="text/javascript" src="../useful/timer.js"></script>
+  <script type="text/javascript" src="../useful/canvas.js"></script>
+  <script type="text/javascript" src="../useful/errors.js"></script>
+  <script type="text/javascript" src="../useful/mouse.js"></script>
+  <script type="text/javascript" src="../useful/gaze.js"></script>
+  <script type="text/javascript" src="../useful/head.js"></script>
+  <!--<script type="text/javascript" src="../useful/grid.js"></script>-->
+  <script type="text/javascript" src="../colours/graph.js"> </script>
+  <script type="text/javascript" src="pies.js"></script>
+  <script type="text/javascript" src="paint.js"></script>
+  <script type="text/javascript" src="donut.js"></script>
+ </body>
+</html>
+
