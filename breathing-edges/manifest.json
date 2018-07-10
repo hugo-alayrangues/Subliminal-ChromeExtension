@@ -3,8 +3,18 @@
     "name": "Breathing Edges",
     "version": "1.0",
     "description": "Adds \"breathing\" edges to active webpages",
+
     "browser_action": {
         "default_popup": "popup.html",
         "default_title": "Breathing Edges"
-    }
+    },
+
+    "permissions": [
+        "activeTab"
+    ],
+
+    "content_scripts": [ {
+        "matches": [ "*://*/*" ],
+        "css": [ "breathing.css" ]
+    } ]
 }
