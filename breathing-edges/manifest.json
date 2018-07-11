@@ -10,11 +10,12 @@
     },
 
     "permissions": [
+        "storage",
         "activeTab"
     ],
 
     "content_scripts": [ {
-        "matches": [ "*://*/*" ],
+        "matches": [ "<all_urls>" ],
         "css": [ "breathing.css" ]
     } ]
 }
