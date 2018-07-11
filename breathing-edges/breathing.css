@@ -12,7 +12,7 @@ body {
     margin: 0px;
     z-index:99999999;
     animation: breathe infinite ease 3s;
-    pointer-events: none;   
+    pointer-events: none;
 }
 
 @keyframes breathe
