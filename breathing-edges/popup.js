@@ -23,13 +23,15 @@ function set_breathe()
     }, function(items) {
         if (items.enabled)
         {
-            chrome.tabs.executeScript({
-                code: 'var div=document.createElement("div"); div.setAttribute("id", "breathebox"); document.body.insertBefore(div, document.body.firstChild);'
+            chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, {todo: "enableBox"});
             });
         }
         else
         {
-            chrome.tabs.executeScript(null, {code: 'var div=document.getElementById("breathebox"); div.remove();'});
+            chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, {todo: "disableBox"});
+            });
         }
     });
 }
