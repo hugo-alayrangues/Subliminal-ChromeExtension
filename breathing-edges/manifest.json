@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+    "name": "Breathing Edges",
+    "version": "1.0",
+    "description": "Adds \"breathing\" edges to active webpages",
+
+    "browser_action": {
+        "default_popup": "popup.html",
+        "default_title": "Breathing Edges"
+    },
+
+    "permissions": [
+        "storage",
+        "activeTab"
+    ],
+
+    "content_scripts": [ {
+        "matches": [ "<all_urls>" ],
+        "css": [ "breathing.css" ]
+    } ]
+}
