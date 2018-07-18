@@ -66,6 +66,28 @@ function change_opacity(e)
     });
 }
 
+// update breathing interval
+function change_interval(e)
+{
+    var reg = /^(\d+\.?\d*|\.\d+)$/;
+    if (reg.exec(this.value)) // check for valid text input
+    {
+        var decimal_val = this.value;
+
+        // store value
+        chrome.storage.sync.set({
+            interval: decimal_val
+        }, function() {
+            update_status();
+        });
+
+        // update page
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            chrome.tabs.sendMessage(tabs[0].id, {todo: "update"});
+        });
+    }
+}
+
 // restore options when popup is opened
 function restore_options() 
 {
@@ -73,12 +95,14 @@ function restore_options()
     chrome.storage.sync.get({
         enabled: false,
         color: "",
-        opacity: 1.0
+        opacity: 1.0,
+        interval: 3
     }, function(items) {
         // update values
         document.querySelector("input[type=checkbox]").checked = items.enabled;
         document.getElementById("colorBox").value = items.color;
         document.querySelector("input[type=range]").value = items.opacity*100;
+        document.getElementById("breathingInterval").value = items.interval;
 
         // update styles
         document.getElementById("colorBox").style.background = items.color;
@@ -117,6 +141,8 @@ document.addEventListener('DOMContentLoaded', function () {
     colorbox.addEventListener('input', change_hex);
     var range_slider = document.querySelector('.range-slider');
     range_slider.addEventListener('input', change_opacity);
+    var interval_input = document.getElementById("breathingInterval");
+    interval_input.addEventListener('input', change_interval);
 
     // var sheet = document.createElement('style');
     // document.appendChild(sheet);

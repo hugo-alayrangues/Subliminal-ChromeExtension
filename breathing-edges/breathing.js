@@ -6,6 +6,8 @@
 //     }
 // });
 
+// chrome.runtime.onStartup.addListener(update);
+
 var sheet = document.createElement('style');
 document.body.appendChild(sheet);
 
@@ -23,7 +25,8 @@ function update()
     chrome.storage.sync.get({
         enabled: false,
         color: "",
-        opacity: 1.0
+        opacity: 1.0,
+        interval: -1
     }, function(items) {
         var divs = document.body.querySelectorAll("#breathebox"); // check if there's already a box
         if (divs.length < 1 && items.enabled)
@@ -54,7 +57,17 @@ function update()
                               "inset 10px 10px 40px "   + hex_to_rgba(items.color, items.opacity) + ", \n" +
                               "inset -10px -10px 40px " + hex_to_rgba(items.color, items.opacity) + "; } \n" +
 
-                              "}";
+                              "}\n";
+        }
+
+        if (items.enabled)
+        {
+            // alert("breathe infinite ease " + 2.9 + "s;");
+            // alert("breathe infinite ease " + items.interval + "s;");
+            document.getElementById("breathebox").setAttribute('style', 
+              "animation: breathe infinite ease " + items.interval + "s;");
+            // alert("breathe infinite ease " + items.interval + "s;");
+            // sheet.innerHTML += "breathe infinite ease " + items.interval + "s;";
         }
     });
 }
