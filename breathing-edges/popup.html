@@ -6,10 +6,35 @@
         <script src="popup.js"></script>
     </head>
     <body>
-        <label class="switch">
-            <input type="checkbox">
-            <span class="slider"></span>
-        </label>
+        <hr class="sep" section="MASTER CONTROL">
+        <div class="item">
+            <label>ENABLED</label>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <hr class="sep" section="COLOR">
+        <div class="item">
+            <label>HEX VALUE</label>
+            <input type="text" id="colorBox" />
+        </div>
+        <div class="item">
+            <label>OPACITY</label>
+            <div class="range-slider-container">
+                <input type="range" class="range-slider" value="100" />
+                <span id="range-value-bar"></span>
+            </div>
+        </div>
+
+        <hr class="sep" section="INTERVAL">
+        <div class="item">
+            <label>INTERVAL (s)</label>
+            <input type="text" id="breathingInterval" />
+        </div>
+
+        <hr class="sep" section="">
         <div id="status"></div>
     </body>
 </html>
