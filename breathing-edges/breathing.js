@@ -1,13 +1,9 @@
-// chrome.runtime.sendMessage({todo: "showPageAction"});
+// check for update when page is focused
+window.addEventListener('load', update);
+window.addEventListener('focus', update);
+// window.addEventListener('blur', unfocus);
 
-// chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
-//     if (changeInfo.status == 'complete') {
-//         update();
-//     }
-// });
-
-// chrome.runtime.onStartup.addListener(update);
-
+// custom style for color changes
 var sheet = document.createElement('style');
 document.body.appendChild(sheet);
 
@@ -22,6 +18,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 // update all options
 function update()
 {
+    // alert("in update");
     chrome.storage.sync.get({
         enabled: false,
         color: "",
@@ -70,6 +67,17 @@ function update()
             // sheet.innerHTML += "breathe infinite ease " + items.interval + "s;";
         }
     });
+}
+
+// remove box if tab unfocused
+function unfocus()
+{
+    var divs = document.body.querySelectorAll("#breathebox");
+    if (divs.length > 0)
+    {
+        var div = document.getElementById("breathebox"); 
+        div.remove();
+    }
 }
 
 // helper function for updating color and opacity
