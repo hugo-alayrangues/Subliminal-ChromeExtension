@@ -30,7 +30,8 @@ function change_hex(e)
 
         // update styles accordingly
         document.getElementById("colorBox").style.background = hex_val;
-        document.querySelector(".slider").style.background = hex_val;
+        // document.querySelector(".slider").style.background = hex_val;
+        color_style.innerHTML = ".color input:checked + .slider {background-color: " + hex_val + ";}";
         document.querySelector('#range-value-bar').style.background = hex_val;
 
         // store value
@@ -88,6 +89,29 @@ function change_interval(e)
     }
 }
 
+function check_visibility(e)
+{
+    // store value
+    chrome.storage.sync.set({
+        visibility: this.checked
+    }, function() {
+        update_status();
+    });
+
+    // update styles
+    if (this.checked)
+    {
+        visibility_style.innerHTML = ".slider {box-shadow: 0 0 3px 1px rgba(0, 0, 0, .15);}\n" +
+            ".slider:before {box-shadow: 0 0 3px 1px rgba(0, 0, 0, .15);}\n" +
+            "input {box-shadow: 0 0 3px 1px rgba(0, 0, 0, .15);}\n" +
+            "input[type=range]::-webkit-slider-thumb {box-shadow: 0 0 3px 1px rgba(0, 0, 0, .15);}";
+    }
+    else
+    {
+        visibility_style.innerHTML = "";
+    }
+}
+
 // restore options when popup is opened
 function restore_options() 
 {
@@ -96,19 +120,32 @@ function restore_options()
         enabled: false,
         color: "",
         opacity: 1.0,
-        interval: 3
+        interval: 3,
+        visibility: false
     }, function(items) {
         // update values
-        document.querySelector("input[type=checkbox]").checked = items.enabled;
+        document.querySelector(".enable").checked = items.enabled;
         document.getElementById("colorBox").value = items.color;
         document.querySelector("input[type=range]").value = items.opacity*100;
         document.getElementById("breathingInterval").value = items.interval;
+        document.querySelector(".visibility").checked = items.visibility;
 
         // update styles
         document.getElementById("colorBox").style.background = items.color;
-        document.querySelector(".slider").style.background = items.color;
+        color_style.innerHTML = ".color input:checked + .slider {background-color: " + items.color + ";}";
         document.querySelector('#range-value-bar').style.background = items.color;
         document.querySelector('#range-value-bar').style.setProperty('opacity', items.opacity);
+        if (items.visibility)
+        {
+            visibility_style.innerHTML = ".slider {box-shadow: 0 0 3px 1px rgba(0, 0, 0, .15);}\n" +
+                ".slider:before {box-shadow: 0 0 3px 1px rgba(0, 0, 0, .15);}\n" +
+                "input {box-shadow: 0 0 3px 1px rgba(0, 0, 0, .15);}\n" +
+                "input[type=range]::-webkit-slider-thumb {box-shadow: 0 0 3px 1px rgba(0, 0, 0, .15);}";
+        }
+        else
+        {
+            visibility_style.innerHTML = "";
+        }
     });
 }
 
@@ -123,11 +160,8 @@ function update_status()
     }, 750);
 }
 
-// chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
-//     if (changeInfo.status == 'complete') {
-//         update();
-//     }
-// });
+var color_style = document.createElement('style');
+var visibility_style = document.createElement('style');
 
 // execute when popup loaded
 document.addEventListener('DOMContentLoaded', function () {
@@ -135,17 +169,19 @@ document.addEventListener('DOMContentLoaded', function () {
     restore_options();
     
     // add listeners
-    var checkbox = document.querySelector("input[type=checkbox]");
-    checkbox.addEventListener('click', check_enable);
+    var enable_check = document.querySelector(".enable");
+    enable_check.addEventListener('click', check_enable);
     var colorbox = document.getElementById("colorBox");
     colorbox.addEventListener('input', change_hex);
     var range_slider = document.querySelector('.range-slider');
-    range_slider.addEventListener('input', change_opacity);
+    range_slider.addEventListener('change', change_opacity);
     var interval_input = document.getElementById("breathingInterval");
     interval_input.addEventListener('input', change_interval);
+    var visibility_check = document.querySelector(".visibility");
+    visibility_check.addEventListener('click', check_visibility);
 
-    // var sheet = document.createElement('style');
-    // document.appendChild(sheet);
+    document.body.appendChild(color_style);
+    document.body.appendChild(visibility_style);
     
     // initial update of page
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
