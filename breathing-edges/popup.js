@@ -6,9 +6,28 @@ function check_enable(e)
     // store value
     chrome.storage.sync.set({
         enabled: this.checked
-    }, function() {
-        update_status();
+    }, update_status);
+
+    // update page
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, {todo: "update"});
     });
+}
+
+// update color picker
+function change_color(e)
+{
+    // update styles
+    document.querySelector(".color-picker-wrapper").style.backgroundColor = this.value;
+    document.getElementById("colorBox").value = this.value;
+    document.getElementById("colorBox").style.background = this.value;
+    color_style.innerHTML = ".color input:checked + .slider {background-color: " + this.value + ";}";
+    document.querySelector('#range-value-bar').style.background = this.value;
+
+    // store value
+    chrome.storage.sync.set({
+        color: this.value
+    }, update_status);
 
     // update page
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
@@ -30,16 +49,15 @@ function change_hex(e)
 
         // update styles accordingly
         document.getElementById("colorBox").style.background = hex_val;
-        // document.querySelector(".slider").style.background = hex_val;
+        document.querySelector(".color-picker").value = hex_val;
+        document.querySelector(".color-picker-wrapper").style.backgroundColor = hex_val;
         color_style.innerHTML = ".color input:checked + .slider {background-color: " + hex_val + ";}";
         document.querySelector('#range-value-bar').style.background = hex_val;
 
         // store value
         chrome.storage.sync.set({
             color: hex_val
-        }, function() {
-            update_status();
-        });
+        }, update_status);
 
         // update page
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
@@ -57,9 +75,7 @@ function change_opacity(e)
     // store value
     chrome.storage.sync.set({
         opacity: this.value/100
-    }, function() {
-        update_status();
-    });
+    }, update_status);
 
     // update page
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
@@ -78,9 +94,7 @@ function change_interval(e)
         // store value
         chrome.storage.sync.set({
             interval: decimal_val
-        }, function() {
-            update_status();
-        });
+        }, update_status);
 
         // update page
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
@@ -94,15 +108,14 @@ function check_visibility(e)
     // store value
     chrome.storage.sync.set({
         visibility: this.checked
-    }, function() {
-        update_status();
-    });
+    }, update_status);
 
     // update styles
     if (this.checked)
     {
         visibility_style.innerHTML = ".slider {box-shadow: 0 0 3px 1px rgba(0, 0, 0, .15);}\n" +
             ".slider:before {box-shadow: 0 0 3px 1px rgba(0, 0, 0, .15);}\n" +
+            ".color-picker-wrapper {box-shadow: 0 0 3px 1px rgba(0, 0, 0, .15);}\n" +
             "input {box-shadow: 0 0 3px 1px rgba(0, 0, 0, .15);}\n" +
             "input[type=range]::-webkit-slider-thumb {box-shadow: 0 0 3px 1px rgba(0, 0, 0, .15);}";
     }
@@ -125,12 +138,14 @@ function restore_options()
     }, function(items) {
         // update values
         document.querySelector(".enable").checked = items.enabled;
+        document.querySelector(".color-picker").value = items.color;
         document.getElementById("colorBox").value = items.color;
         document.querySelector("input[type=range]").value = items.opacity*100;
         document.getElementById("breathingInterval").value = items.interval;
         document.querySelector(".visibility").checked = items.visibility;
 
         // update styles
+        document.querySelector(".color-picker-wrapper").style.backgroundColor = items.color;
         document.getElementById("colorBox").style.background = items.color;
         color_style.innerHTML = ".color input:checked + .slider {background-color: " + items.color + ";}";
         document.querySelector('#range-value-bar').style.background = items.color;
@@ -139,6 +154,7 @@ function restore_options()
         {
             visibility_style.innerHTML = ".slider {box-shadow: 0 0 3px 1px rgba(0, 0, 0, .15);}\n" +
                 ".slider:before {box-shadow: 0 0 3px 1px rgba(0, 0, 0, .15);}\n" +
+                ".color-picker-wrapper {box-shadow: 0 0 3px 1px rgba(0, 0, 0, .15);}\n" +
                 "input {box-shadow: 0 0 3px 1px rgba(0, 0, 0, .15);}\n" +
                 "input[type=range]::-webkit-slider-thumb {box-shadow: 0 0 3px 1px rgba(0, 0, 0, .15);}";
         }
@@ -171,6 +187,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // add listeners
     var enable_check = document.querySelector(".enable");
     enable_check.addEventListener('click', check_enable);
+    var color_picker = document.querySelector('.color-picker');
+    color_picker.addEventListener('change', change_color);
     var colorbox = document.getElementById("colorBox");
     colorbox.addEventListener('input', change_hex);
     var range_slider = document.querySelector('.range-slider');

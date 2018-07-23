@@ -59,12 +59,8 @@ function update()
 
         if (items.enabled)
         {
-            // alert("breathe infinite ease " + 2.9 + "s;");
-            // alert("breathe infinite ease " + items.interval + "s;");
             document.getElementById("breathebox").setAttribute('style', 
               "animation: breathe infinite ease " + items.interval + "s;");
-            // alert("breathe infinite ease " + items.interval + "s;");
-            // sheet.innerHTML += "breathe infinite ease " + items.interval + "s;";
         }
     });
 }

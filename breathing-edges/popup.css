@@ -1,6 +1,6 @@
 body 
 {
-    width: 250px;
+    width: 275px;
     color: #666;
 }
 
@@ -121,6 +121,25 @@ input:checked + .slider:before
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(26px);
+}
+
+/* color picker */
+.color-picker-wrapper
+{
+    float: left;
+    height: 28px;
+    width: 50px;
+    border: 0;
+    border-radius: 5px;
+    margin: 4px 0;
+    transition: .3s ease-out;
+}
+
+.color-picker
+{
+    display: block;
+    opacity: 0;
+    cursor: pointer;
 }
 
 /* color input text box */
