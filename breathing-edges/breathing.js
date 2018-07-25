@@ -60,7 +60,7 @@ function update()
         if (items.enabled)
         {
             document.getElementById("breathebox").setAttribute('style', 
-              "animation: breathe infinite ease " + items.interval + "s;");
+              "animation: breathe infinite cubic-bezier(0,0,.4,1) " + items.interval + "s;");
         }
     });
 }
