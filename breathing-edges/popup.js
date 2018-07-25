@@ -133,7 +133,7 @@ function restore_options()
         enabled: false,
         color: "",
         opacity: 1.0,
-        interval: 3,
+        interval: 4,
         visibility: false
     }, function(items) {
         // update values

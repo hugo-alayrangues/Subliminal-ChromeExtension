@@ -43,16 +43,16 @@ function update()
         {
             sheet.innerHTML = "@keyframes breathe { \n" +
                               "0% { box-shadow: \n" +
-                              "inset 10px 10px 40px "   + hex_to_rgba(items.color, items.opacity) + ", \n" +
-                              "inset -10px -10px 40px " + hex_to_rgba(items.color, items.opacity) + "; } \n" +
+                              "inset 0px 0px 40px "   + hex_to_rgba(items.color, items.opacity) + ", \n" +
+                              "inset -0px -0px 40px " + hex_to_rgba(items.color, items.opacity) + "; } \n" +
 
                               "50% { box-shadow: \n" +
-                              "inset 0px 0px 80px "   + hex_to_rgba(items.color, items.opacity) + ", \n" +
-                              "inset -0px -0px 80px " + hex_to_rgba(items.color, items.opacity) + "; } \n" +
+                              "inset 10px 10px 80px "   + hex_to_rgba(items.color, items.opacity) + ", \n" +
+                              "inset -10px -10px 80px " + hex_to_rgba(items.color, items.opacity) + "; } \n" +
 
                               "100% { box-shadow: \n" +
-                              "inset 10px 10px 40px "   + hex_to_rgba(items.color, items.opacity) + ", \n" +
-                              "inset -10px -10px 40px " + hex_to_rgba(items.color, items.opacity) + "; } \n" +
+                              "inset 0px 0px 40px "   + hex_to_rgba(items.color, items.opacity) + ", \n" +
+                              "inset -0px -0px 40px " + hex_to_rgba(items.color, items.opacity) + "; } \n" +
 
                               "}\n";
         }
