@@ -1,7 +1,7 @@
 // check for update when page is focused
 window.addEventListener('load', update);
 window.addEventListener('focus', update);
-// window.addEventListener('blur', unfocus);
+window.addEventListener('blur', unfocus);
 
 // custom style for color changes
 var sheet = document.createElement('style');
