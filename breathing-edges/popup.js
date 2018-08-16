@@ -22,7 +22,7 @@ function change_color(e)
     document.getElementById("colorBox").value = this.value;
     document.getElementById("colorBox").style.background = this.value;
     color_style.innerHTML = ".color input:checked + .slider {background-color: " + this.value + ";}";
-    document.querySelector('#range-value-bar').style.background = this.value;
+    document.querySelector('#range-value-bar-color').style.background = this.value;
 
     // store value
     chrome.storage.sync.set({
@@ -52,7 +52,7 @@ function change_hex(e)
         document.querySelector(".color-picker").value = hex_val;
         document.querySelector(".color-picker-wrapper").style.backgroundColor = hex_val;
         color_style.innerHTML = ".color input:checked + .slider {background-color: " + hex_val + ";}";
-        document.querySelector('#range-value-bar').style.background = hex_val;
+        document.querySelector('#range-value-bar-color').style.background = hex_val;
 
         // store value
         chrome.storage.sync.set({
@@ -70,7 +70,7 @@ function change_hex(e)
 function change_opacity(e)
 {
     // update styles
-    document.querySelector('#range-value-bar').style.setProperty('opacity', this.value/100);
+    document.querySelector('#range-value-bar-color').style.setProperty('opacity', this.value/100);
 
     // store value
     chrome.storage.sync.set({
@@ -84,12 +84,31 @@ function change_opacity(e)
 }
 
 // update breathing interval
-function change_interval(e)
+function change_interval_slider(e)
 {
-    var reg = /^(\d+\.?\d*|\.\d+)$/;
+    document.getElementById("breathingInterval").value = this.value;
+
+    // store value
+    chrome.storage.sync.set({
+        interval: this.value
+    }, update_status);
+
+    // update page
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, {todo: "update"});
+    });
+}
+
+// update breathing interval
+function change_interval_text(e)
+{
+    // var reg = /^(\d+\.?\d*|\.\d+)$/;
+    var reg = /^(1[2-9]|20)$/
     if (reg.exec(this.value)) // check for valid text input
     {
         var decimal_val = this.value;
+
+        document.querySelector('.range-slider-interval').value = decimal_val;
 
         // store value
         chrome.storage.sync.set({
@@ -140,7 +159,8 @@ function restore_options()
         document.querySelector(".enable").checked = items.enabled;
         document.querySelector(".color-picker").value = items.color;
         document.getElementById("colorBox").value = items.color;
-        document.querySelector("input[type=range]").value = items.opacity*100;
+        document.querySelector(".range-slider-color").value = items.opacity*100;
+        document.querySelector(".range-slider-interval").value = items.interval;
         document.getElementById("breathingInterval").value = items.interval;
         document.querySelector(".visibility").checked = items.visibility;
 
@@ -148,8 +168,8 @@ function restore_options()
         document.querySelector(".color-picker-wrapper").style.backgroundColor = items.color;
         document.getElementById("colorBox").style.background = items.color;
         color_style.innerHTML = ".color input:checked + .slider {background-color: " + items.color + ";}";
-        document.querySelector('#range-value-bar').style.background = items.color;
-        document.querySelector('#range-value-bar').style.setProperty('opacity', items.opacity);
+        document.querySelector('#range-value-bar-color').style.background = items.color;
+        document.querySelector('#range-value-bar-color').style.setProperty('opacity', items.opacity);
         if (items.visibility)
         {
             visibility_style.innerHTML = ".slider {box-shadow: 0 0 3px 1px rgba(0, 0, 0, .15);}\n" +
@@ -191,10 +211,12 @@ document.addEventListener('DOMContentLoaded', function () {
     color_picker.addEventListener('change', change_color);
     var colorbox = document.getElementById("colorBox");
     colorbox.addEventListener('input', change_hex);
-    var range_slider = document.querySelector('.range-slider');
+    var range_slider = document.querySelector('.range-slider-color');
     range_slider.addEventListener('change', change_opacity);
+    var interval_slider = document.querySelector('.range-slider-interval');
+    interval_slider.addEventListener('change', change_interval_slider);
     var interval_input = document.getElementById("breathingInterval");
-    interval_input.addEventListener('input', change_interval);
+    interval_input.addEventListener('input', change_interval_text);
     var visibility_check = document.querySelector(".visibility");
     visibility_check.addEventListener('click', check_visibility);
 

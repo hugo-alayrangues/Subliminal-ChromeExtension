@@ -59,8 +59,9 @@ function update()
 
         if (items.enabled)
         {
+            var bpm = parseInt(items.interval)
             document.getElementById("breathebox").setAttribute('style', 
-              "animation: breathe infinite ease " + items.interval + "s;");
+              "animation: breathe infinite ease " + 60.0/bpm + "s;");
         }
     });
 }

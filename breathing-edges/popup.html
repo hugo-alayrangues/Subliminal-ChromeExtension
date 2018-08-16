@@ -30,15 +30,22 @@
         <div class="item">
             <label>OPACITY</label>
             <div class="range-slider-container">
-                <input type="range" class="range-slider" value="100" />
-                <span id="range-value-bar"></span>
+                <input type="range" class="range-slider-color" value="100" />
+                <span id="range-value-bar-color"></span>
             </div>
         </div>
 
         <hr class="sep" section="INTERVAL">
         <div class="item">
-            <label>INTERVAL (s)</label>
-            <input type="text" id="breathingInterval" />
+            <label>INTERVAL</label>
+            <span align="center">
+                <div class="range-slider-container">
+                    <input type="range" class="range-slider-interval" value="12" min="12" max="20" />
+                    <span id="range-value-bar"></span>
+                </div>
+                <input type="text" id="breathingInterval" />
+                <span class="tag">breaths/min</span>
+            </span>
         </div>
 
         <hr class="sep" section="MODES">
