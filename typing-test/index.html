@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <div id="startWindow">
+            <div class="modalBox">
+                <h1>Typing Test</h1>
+                <button id="startButton">Start Test</button>
+            </div>
+        </div>
+
+        <div id="wrapper">
+            <tr>
+                <div id="paraContainer">
+                    <p id="testPara"></p>
+                </div>
+
+                <textarea id="textArea" name="textarea" rows="5" cols="50" onPaste="return false" placeholder="Timer will only start after you begin typing."></textarea>
+            </tr>
+
+            <tr>
+                <div id="timer"></div>
+            </tr>
+        </div>
+
+        <div id="newTestWindow">
+            <div class="modalBox">
+                <h1>Time's Up!</h1>
+                <p id="finalScore"></p>
+                <button id="newTestButton">Click to try again!</button>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="test.js"></script>
+    </body>
+</html>

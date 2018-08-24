@@ -144,6 +144,24 @@ function check_visibility(e)
     }
 }
 
+// use pilot preset
+function set_preset(e)
+{
+    // store value
+    chrome.storage.sync.set({
+        color: "#000000",
+        opacity: .20,
+        interval: 15
+    }, update_status);
+
+    // update page
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, {todo: "update"});
+    });
+
+    restore_options();
+}
+
 // restore options when popup is opened
 function restore_options() 
 {
@@ -219,6 +237,8 @@ document.addEventListener('DOMContentLoaded', function () {
     interval_input.addEventListener('input', change_interval_text);
     var visibility_check = document.querySelector(".visibility");
     visibility_check.addEventListener('click', check_visibility);
+    var preset_button = document.querySelector(".pilot-preset");
+    preset_button.addEventListener('click', set_preset);
 
     document.body.appendChild(color_style);
     document.body.appendChild(visibility_style);
