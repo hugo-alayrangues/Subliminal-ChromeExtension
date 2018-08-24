@@ -4,6 +4,14 @@
     "version": "1.0",
     "description": "Adds \"breathing\" edges to active webpages",
 
+    "icons": { "16": "breathingedges_logo16.png",
+               "48": "breathingedges_logo48.png",
+               "64": "breathingedges_logo64.png",
+               "128": "breathingedges_logo128.png",
+               "256": "breathingedges_logo256.png",
+               "512": "breathingedges_logo512.png",
+               "1024": "breathingedges_logo1024.png" },
+
     "browser_action": {
         "default_popup": "popup.html",
         "default_title": "Breathing Edges"
