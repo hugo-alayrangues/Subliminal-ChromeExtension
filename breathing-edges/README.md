@@ -1,0 +1,1 @@
+Breathing Edges is a Chrome extension to potentially help users regulate breathing to help ease stress. Options such as color and opacity are included to vary the intensity/ noticeability of the intervention.
