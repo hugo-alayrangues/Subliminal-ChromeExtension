@@ -92,6 +92,7 @@ body
     right: 0;
     bottom: 0;
     border-radius: 34px;
+    border: 1px solid #c3c3c3;
     background-color: #ccc;
     -webkit-transition: .3s ease-out;
     transition: .3s ease-out;
@@ -129,7 +130,7 @@ input:checked + .slider:before
     float: left;
     height: 28px;
     width: 50px;
-    border: 0;
+    border: 1px solid #c3c3c3;
     border-radius: 5px;
     margin: 4px 0;
     transition: .3s ease-out;
@@ -150,7 +151,7 @@ input#colorBox
     outline: none !important;
     width: 100px;
     border-radius: 5px;
-    border: 0;
+    border: 1px solid #c3c3c3;
     padding: 5px;
     transition: .3s ease-out;
     background-color: #ccc;
@@ -184,6 +185,7 @@ input[type=range]
     left: 0;
     margin: 0;
     border-radius: 5px;
+    border: 1px solid #c3c3c3;
     transition: .3s ease-out;
     pointer-events: none;
 }

@@ -18,21 +18,14 @@ body
     pointer-events: none;
 }
 
-@keyframes breathe
-{
+@keyframes breathe {
     0% {
-        box-shadow:
-            inset 0px 0px 40px #0ff,
-            inset -0px -0px 40px #0ff;
+        opacity: 0.2;
     }
     50% {
-        box-shadow:
-            inset 10px 10px 80px #00e0ff,
-            inset -10px -10px 80px #00e0ff;
+        opacity: 1;
     }
     100% {
-        box-shadow:
-            inset 0px 0px 40px #0ff,
-            inset -0px -0px 40px #0ff;
+        opacity: 0.2;
     }
 }

@@ -27,7 +27,7 @@ function update(event)
             enabled: false,
             color: "",
             opacity: 1.0,
-            interval: -1
+            interval: 4
         }, function(items) {
             let divs = document.body.querySelectorAll("#breathebox"); // check if there's already a box
             if (divs.length < 1 && items.enabled)
@@ -46,24 +46,17 @@ function update(event)
             if (items.color !== "")
             {
                 sheet.innerHTML = "@keyframes breathe { \n" +
-                    "0% { box-shadow: \n" +
-                    "inset 0px 0px 40px "   + hex_to_rgba(items.color, items.opacity) + ", \n" +
-                    "inset -0px -0px 40px " + hex_to_rgba(items.color, items.opacity) + "; } \n" +
-
-                    "50% { box-shadow: \n" +
-                    "inset 10px 10px 80px "   + hex_to_rgba(items.color, items.opacity) + ", \n" +
-                    "inset -10px -10px 80px " + hex_to_rgba(items.color, items.opacity) + "; } \n" +
-
-                    "100% { box-shadow: \n" +
-                    "inset 0px 0px 40px "   + hex_to_rgba(items.color, items.opacity) + ", \n" +
-                    "inset -0px -0px 40px " + hex_to_rgba(items.color, items.opacity) + "; } \n" +
-
+                    "0% { opacity: 0.2; }\n" +
+                    "50% { opacity: 1; }\n" +
+                    "100% { opacity: 0.2; }\n" +
                     "}\n";
             }
 
             if (items.enabled)
             {
                 document.getElementById("breathebox").setAttribute('style',
+                    "box-shadow: inset 20px 20px 80px " + hex_to_rgba(items.color, items.opacity) +
+                    " , inset -20px -20px 80px " + hex_to_rgba(items.color, items.opacity) + "; " +
                     "animation: breathe infinite cubic-bezier(.5,.1,.3,1) " + items.interval + "s;");
             }
 
