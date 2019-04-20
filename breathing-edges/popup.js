@@ -1,7 +1,7 @@
 'use strict';
 
 // update enable checkbox
-function check_enable(e)
+function check_enable()
 {
     // store value
     chrome.storage.sync.set({
@@ -15,7 +15,7 @@ function check_enable(e)
 }
 
 // update color picker
-function change_color(e)
+function change_color()
 {
     // update styles
     document.querySelector(".color-picker-wrapper").style.backgroundColor = this.value;
@@ -36,13 +36,13 @@ function change_color(e)
 }
 
 // update color box
-function change_hex(e)
+function change_hex()
 {
-    var reg = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/;
+    let reg = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/;
     if (reg.exec(this.value)) // check for valid text input
     {
-        var hex_val = this.value;
-        if (hex_val.charAt(0) != '#') // fix string if needed
+        let hex_val = this.value;
+        if (hex_val.charAt(0) !== '#') // fix string if needed
         {
             hex_val = '#' + hex_val;
         }
@@ -67,7 +67,7 @@ function change_hex(e)
 }
 
 // update opacity
-function change_opacity(e)
+function change_opacity()
 {
     // update styles
     document.querySelector('#range-value-bar').style.setProperty('opacity', this.value/100);
@@ -84,12 +84,12 @@ function change_opacity(e)
 }
 
 // update breathing interval
-function change_interval(e)
+function change_interval()
 {
-    var reg = /^(\d+\.?\d*|\.\d+)$/;
+    let reg = /^(\d+\.?\d*|\.\d+)$/;
     if (reg.exec(this.value)) // check for valid text input
     {
-        var decimal_val = this.value;
+        let decimal_val = this.value;
 
         // store value
         chrome.storage.sync.set({
@@ -103,7 +103,7 @@ function change_interval(e)
     }
 }
 
-function check_visibility(e)
+function check_visibility()
 {
     // store value
     chrome.storage.sync.set({
@@ -168,7 +168,7 @@ function restore_options()
 function update_status()
 {
     // update status to show options saved
-    var status = document.getElementById('status');
+    let status = document.getElementById('status');
     status.textContent = 'Options saved.';
 
     setTimeout(function() {
@@ -176,8 +176,8 @@ function update_status()
     }, 750);
 }
 
-var color_style = document.createElement('style');
-var visibility_style = document.createElement('style');
+let color_style = document.createElement('style');
+let visibility_style = document.createElement('style');
 
 // execute when popup loaded
 document.addEventListener('DOMContentLoaded', function () {
@@ -185,17 +185,17 @@ document.addEventListener('DOMContentLoaded', function () {
     restore_options();
     
     // add listeners
-    var enable_check = document.querySelector(".enable");
+    let enable_check = document.querySelector(".enable");
     enable_check.addEventListener('click', check_enable);
-    var color_picker = document.querySelector('.color-picker');
+    let color_picker = document.querySelector('.color-picker');
     color_picker.addEventListener('change', change_color);
-    var colorbox = document.getElementById("colorBox");
+    let colorbox = document.getElementById("colorBox");
     colorbox.addEventListener('input', change_hex);
-    var range_slider = document.querySelector('.range-slider');
+    let range_slider = document.querySelector('.range-slider');
     range_slider.addEventListener('change', change_opacity);
-    var interval_input = document.getElementById("breathingInterval");
+    let interval_input = document.getElementById("breathingInterval");
     interval_input.addEventListener('input', change_interval);
-    var visibility_check = document.querySelector(".visibility");
+    let visibility_check = document.querySelector(".visibility");
     visibility_check.addEventListener('click', check_visibility);
 
     document.body.appendChild(color_style);
@@ -203,7 +203,9 @@ document.addEventListener('DOMContentLoaded', function () {
     
     // initial update of page
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, {todo: "update"});
+        if (typeof chrome.app.isInstalled !== 'undefined'){
+            chrome.tabs.sendMessage(tabs[0].id, {todo: "update"});
+        }
     });
 });
 
